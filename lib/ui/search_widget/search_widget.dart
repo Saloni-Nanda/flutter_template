@@ -9,10 +9,14 @@ import '../../utils/app_routes.dart';
 
 class HotelSearchWidget extends StatefulWidget {
   final dynamic initialData;
+  final bool showDownArrow;
+  final bool showModifyButton;
 
   const HotelSearchWidget({
     Key? key,
     this.initialData,
+    this.showDownArrow = false,
+    this.showModifyButton = false,
   }) : super(key: key);
 
   @override
@@ -25,6 +29,7 @@ class _HotelSearchWidgetState extends State<HotelSearchWidget> {
   DateTime checkIn = DateTime.now().add(const Duration(days: 1));
   DateTime checkOut = DateTime.now().add(const Duration(days: 2));
   bool showGuestSelector = false;
+  bool isSearchCardExpanded = false;
 
   int rooms = 1;
   int adults = 1;
@@ -178,7 +183,9 @@ class _HotelSearchWidgetState extends State<HotelSearchWidget> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Validation Error'),
-        content: Text(message),
+        content: Text(message, style: const TextStyle(
+          color: AppColor.primary,
+        ),),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -217,17 +224,27 @@ class _HotelSearchWidgetState extends State<HotelSearchWidget> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('Search Help'),
+                  
+                  title: const Text('Search Help',style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.primary,
+                  ),),
                   content: const Text(
                     '• Each room can accommodate up to 4 guests total\n'
                     '• Children: Ages 1-12 years\n'
                     '• Infants: Under 2 years\n'
                     '• At least 1 adult per room required',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColor.primary,
+                    ),
                   ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('OK'),
+                      child: const Text('OK', style: TextStyle(
+                        color: AppColor.secondary
+                      ),),
                     ),
                   ],
                 ),

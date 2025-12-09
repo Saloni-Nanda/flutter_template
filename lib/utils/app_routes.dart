@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:hotel_paradise/ui/filter/filter.dart';
+import 'package:hotel_paradise/views/booking/booking.dart';
 import '../views/splash/splash_page.dart';
 import '../views/home/home_page.dart';
 import '../views/search/search_page.dart';
-import '../views/booking/my_booking_page.dart';
 import '../views/profile/profile_page.dart';
 import '../ui/searched_hotel_list/searched_hotel_list_page.dart';
 
@@ -13,13 +14,15 @@ class AppRoutes {
   static const bookings = '/bookings';
   static const profile = '/profile';
   static const searchedHotels = '/searched_hotels';
+  static const filter = '/filter';
 
   static final routes = [
     GetPage(name: splash, page: () => const SplashPage()),
     GetPage(name: home, page: () => const HomePage()),
     GetPage(name: search, page: () => const SearchPage()),
-    GetPage(name: bookings, page: () => const MyBookingPage()),
+    GetPage(name: bookings, page: () => const Booking()),
     GetPage(name: profile, page: () => const ProfilePage()),
     GetPage(name: searchedHotels, page: () => const SearchedHotelListPage()),
+    GetPage(name: filter, page: () => const FilterPage()),
   ];
 }

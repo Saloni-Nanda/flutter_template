@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../common/theme/theme.dart';
 import 'search_summary_card.dart';
 import 'hotel_card.dart';
-import 'room.dart';
 import '../../common/models/hotel_search_data.dart';
 
 class BookingPage extends StatefulWidget {
@@ -67,7 +66,7 @@ class _BookingPageState extends State<BookingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Search Summary
-            SearchSummaryCard(searchData: widget.searchData),
+            SearchSummaryCard(searchData: widget.searchData,showDownArrow: true, showModifyButton: false),
 
             Padding(
               padding: const EdgeInsets.all(20),
@@ -133,8 +132,12 @@ class _BookingPageState extends State<BookingPage> {
                         // Full Name
                         TextFormField(
                           controller: _nameController,
+                          style: const TextStyle(color: AppColor.primary),
+                          cursorColor: AppColor.primary,
                           decoration: InputDecoration(
                             labelText: 'Full Name',
+                            labelStyle: TextStyle(color: AppColor.textLight),
+                            floatingLabelStyle: TextStyle(color: AppColor.primary, fontWeight: FontWeight.w600),
                             prefixIcon: const Icon(Icons.person),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -152,8 +155,12 @@ class _BookingPageState extends State<BookingPage> {
                         // Email
                         TextFormField(
                           controller: _emailController,
+                          style: const TextStyle(color: AppColor.primary),
+                          cursorColor: AppColor.primary,
                           decoration: InputDecoration(
                             labelText: 'Email Address',
+                            labelStyle: TextStyle(color: AppColor.textLight),
+                            floatingLabelStyle: TextStyle(color: AppColor.primary, fontWeight: FontWeight.w600),
                             prefixIcon: const Icon(Icons.email),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -175,8 +182,12 @@ class _BookingPageState extends State<BookingPage> {
                         // Phone
                         TextFormField(
                           controller: _phoneController,
+                          style: const TextStyle(color: AppColor.primary),
+                          cursorColor: AppColor.primary,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
+                            labelStyle: TextStyle(color: AppColor.textLight),
+                            floatingLabelStyle: TextStyle(color: AppColor.primary, fontWeight: FontWeight.w600),
                             prefixIcon: const Icon(Icons.phone),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -195,8 +206,12 @@ class _BookingPageState extends State<BookingPage> {
                         // Special Requests
                         TextFormField(
                           controller: _specialRequestsController,
+                          style: const TextStyle(color: AppColor.primary),
+                          cursorColor: AppColor.primary,
                           decoration: InputDecoration(
                             labelText: 'Special Requests (Optional)',
+                            labelStyle: TextStyle(color: AppColor.textLight),
+                            floatingLabelStyle: TextStyle(color: AppColor.primary, fontWeight: FontWeight.w600),
                             prefixIcon: const Icon(Icons.note),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),

@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   void _onNavTap(int index) {
     if (index != _currentIndex) {
       setState(() => _currentIndex = index);
-      Get.toNamed(navItems[index].route);
+Get.offAllNamed(navItems[index].route);
     }
   }
 

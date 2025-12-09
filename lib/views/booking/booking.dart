@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hotel_paradise/ui/booking/my_bookings_page.dart';
 import '../../ui/bottom_navbar/bottom_navbar.dart';
 import '../../common/bottom_navitem/bottom_navitem_list.dart';
 
-class MyBookingPage extends StatefulWidget {
-  const MyBookingPage({super.key});
+class Booking extends StatefulWidget {
+  const Booking({super.key});
 
   @override
-  State<MyBookingPage> createState() => _MyBookingPageState();
+  State<Booking> createState() => _BookingState();
 }
 
-class _MyBookingPageState extends State<MyBookingPage> {
+class _BookingState extends State<Booking> {
   int _currentIndex = 2; // Bookings index
 
   void _onNavTap(int index) {
@@ -23,7 +24,7 @@ class _MyBookingPageState extends State<MyBookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Bookings Page - Work in Progress")),
+      body: MyBookingsPage(),
       bottomNavigationBar: BottomNavbar(
         currentIndex: _currentIndex,
         onTap: _onNavTap,

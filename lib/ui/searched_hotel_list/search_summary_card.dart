@@ -2,18 +2,33 @@ import 'package:flutter/material.dart';
 import '../../common/theme/theme.dart';
 import 'package:intl/intl.dart';
 import '../../common/models/hotel_search_data.dart';
+import 'package:get/get.dart';
+import '../../utils/app_routes.dart';
 
-class SearchSummaryCard extends StatelessWidget {
+class SearchSummaryCard extends StatefulWidget {
   final HotelSearchData searchData;
+  final bool showDownArrow;
+  final bool showModifyButton;
 
   const SearchSummaryCard({
     Key? key,
     required this.searchData,
+    this.showDownArrow = false,
+    this.showModifyButton = true,
   }) : super(key: key);
 
   @override
+  State<SearchSummaryCard> createState() => _SearchSummaryCardState();
+}
+
+class _SearchSummaryCardState extends State<SearchSummaryCard> {
+  bool isExpanded = true;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -34,14 +49,14 @@ class SearchSummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Destination
+          // Destination with optional down arrow
           Row(
             children: [
               const Icon(Icons.location_on, color: Colors.white, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  searchData.destination,
+                  widget.searchData.destination,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -49,15 +64,31 @@ class SearchSummaryCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if (widget.showDownArrow)
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isExpanded = !isExpanded;
+                    });
+                  },
+                  icon: Icon(
+                    isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                  splashRadius: 20,
+                  padding: EdgeInsets.zero,
+                ),
             ],
           ),
 
-          const SizedBox(height: 12),
-          const Divider(color: Colors.white24, height: 1),
-          const SizedBox(height: 12),
+          if (isExpanded) ...[
+            const SizedBox(height: 12),
+            const Divider(color: Colors.white24, height: 1),
+            const SizedBox(height: 12),
 
-          // Dates and Guest Info
-          Row(
+            // Dates and Guest Info
+            Row(
             children: [
               // Check-in/out dates
               Expanded(
@@ -81,7 +112,7 @@ class SearchSummaryCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      DateFormat('MMM dd, yyyy').format(searchData.checkIn),
+                      DateFormat('MMM dd, yyyy').format(widget.searchData.checkIn),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
@@ -121,7 +152,7 @@ class SearchSummaryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        DateFormat('MMM dd, yyyy').format(searchData.checkOut),
+                        DateFormat('MMM dd, yyyy').format(widget.searchData.checkOut),
                         style: const TextStyle(
                           fontSize: 13,
                           color: Colors.white,
@@ -144,7 +175,7 @@ class SearchSummaryCard extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  searchData.guestSummary,
+                  widget.searchData.guestSummary,
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.white,
@@ -156,7 +187,7 @@ class SearchSummaryCard extends StatelessWidget {
           ),
 
           // Show child and infant ages if present
-          if (searchData.children > 0 || searchData.infants > 0) ...[
+          if (widget.searchData.children > 0 || widget.searchData.infants > 0) ...[
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(8),
@@ -167,19 +198,19 @@ class SearchSummaryCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (searchData.children > 0) ...[
+                  if (widget.searchData.children > 0) ...[
                     Text(
-                      'Children ages: ${searchData.childAges.join(", ")} years',
+                      'Children ages: ${widget.searchData.childAges.join(", ")} years',
                       style: TextStyle(
                         fontSize: 11,
                         color: Colors.white.withOpacity(0.9),
                       ),
                     ),
                   ],
-                  if (searchData.infants > 0) ...[
-                    if (searchData.children > 0) const SizedBox(height: 4),
+                  if (widget.searchData.infants > 0) ...[
+                    if (widget.searchData.children > 0) const SizedBox(height: 4),
                     Text(
-                      'Infants: ${searchData.infantAges.map((age) => age == "12 months" ? "Under 1 year" : "1-2 years").join(", ")}',
+                      'Infants: ${widget.searchData.infantAges.map((age) => age == "12 months" ? "Under 1 year" : "1-2 years").join(", ")}',
                       style: TextStyle(
                         fontSize: 11,
                         color: Colors.white.withOpacity(0.9),
@@ -190,35 +221,46 @@ class SearchSummaryCard extends StatelessWidget {
               ),
             ),
           ],
+          ], // End of expanded content
 
-          const SizedBox(height: 12),
+          // Collapsed state - show modify button if enabled
+          if (!isExpanded && widget.showModifyButton) ...[
+            const SizedBox(height: 8),
+          ],
 
-          // Modify Search button
-          SizedBox(
-            width: double.infinity,
-            height: 36,
-            child: OutlinedButton.icon(
-              onPressed: () {
-                // Go back to search page with current data
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.edit, size: 16, color: Colors.white),
-              label: const Text(
-                'Modify Search',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.white, width: 1.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+          // Modify Search button (always visible at bottom when showModifyButton is true)
+          if (widget.showModifyButton)
+            Padding(
+              padding: EdgeInsets.only(top: isExpanded ? 12 : 0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 36,
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    // Navigate to search page with current data
+                    Get.toNamed(
+                      AppRoutes.search,
+                      arguments: widget.searchData,
+                    );
+                  },
+                  icon: const Icon(Icons.edit, size: 16, color: Colors.white),
+                  label: const Text(
+                    'Modify Search',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.white, width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

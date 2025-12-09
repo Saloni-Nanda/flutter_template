@@ -8,6 +8,8 @@ class Destination {
   final String imageUrl;
   final String description;
   final bool isTrending;
+  final String pricePerPerson;
+  final double rating;
 
   Destination({
     required this.id,
@@ -16,196 +18,173 @@ class Destination {
     required this.imageUrl,
     required this.description,
     this.isTrending = false,
+    this.pricePerPerson = '\$48',
+    this.rating = 4.5,
   });
 }
 
-class PopularDestinationCard extends StatelessWidget {
+class PopularDestinationCard extends StatefulWidget {
   final Destination destination;
-  final VoidCallback? onTap;
   final VoidCallback? onExploreTap;
-  final VoidCallback? onBookmarkTap;
+  final bool isInView;
+  final bool showTrendingBadge;
 
   const PopularDestinationCard({
     super.key,
     required this.destination,
-    this.onTap,
     this.onExploreTap,
-    this.onBookmarkTap,
+    this.isInView = false,
+    this.showTrendingBadge = true,
   });
 
   @override
+  State<PopularDestinationCard> createState() => _PopularDestinationCardState();
+}
+
+class _PopularDestinationCardState extends State<PopularDestinationCard> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onExploreTap,
       child: Container(
-        width: 280,
+        width: 220,
+        height: 250,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
               offset: const Offset(0, 4),
             ),
           ],
-          border: Border.all(
-            color: AppColor.cardBorder,
-            width: 1,
-          ),
         ),
-          child: Column(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
             children: [
-              // Image and Overlay Section
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: Image.network(
-                      destination.imageUrl,
-                      width: double.infinity,
-                      height: 160,
-                      fit: BoxFit.cover,
-                    ),
+              // Image with Zoom Effect
+              AnimatedScale(
+                scale: widget.isInView ? 1.15 : 1.0,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeOut,
+                child: Image.network(
+                  widget.destination.imageUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
+              // Gradient Overlay
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                    ],
                   ),
-                  // Gradient Overlay
-                  Container(
-                    height: 160,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                ),
+              ),
+              // Content at Bottom
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Destination Name
+                      Text(
+                        widget.destination.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.4),
-                          Colors.transparent,
+                      const SizedBox(height: 6),
+                      // Country with Location Icon
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: Colors.white70,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            widget.destination.country,
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                  // Trending Badge
-                  if (destination.isTrending)
-                    Positioned(
-                      bottom: 12,
-                      left: 12,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColor.secondary,
-                              Color.fromARGB(255, 200, 150, 70),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.trending_up,
-                                color: Colors.white, size: 14),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Trending',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
+                ),
               ),
-
-              // Content Section
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // Trending Badge
+              if (widget.destination.isTrending && widget.showTrendingBadge)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          AppColor.secondary,
+                          Color(0xFFD4A356),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    destination.name,
-                                    style: TextStyle(
-                                      color: AppColor.primary,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(width: 6),
-                                  Text(
-                                    destination.country,
-                                    style: TextStyle(
-                                      color: AppColor.textLight,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 4),
-                              // Description
-                              Text(
-                                destination.description,
-                                style: TextStyle(
-                                  color: AppColor.textLight,
-                                  fontSize: 13,
-                                  height: 1.4,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                        Icon(
+                          Icons.trending_up,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          'Trending',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
                     ),
-
-                    // Explore Button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: onExploreTap,
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColor.primary,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text(
-                          'Explore',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }

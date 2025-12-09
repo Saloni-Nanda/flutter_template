@@ -57,20 +57,19 @@ Future.delayed(const Duration(seconds: 3), () {
     super.dispose();
   }
 
-  Widget _buildCubeFace(Color color, Matrix4 transform, double opacity) {
-    return Transform(
-      transform: transform,
-      alignment: Alignment.center,
-      child: Container(
-        width: 10,
-        height: 10,
-        decoration: BoxDecoration(
-          color: color,
-          
-        ),
-      ),
-    );
-  }
+  // Widget _buildCubeFace(Color color, Matrix4 transform, double opacity) {
+  //   return Transform(
+  //     transform: transform,
+  //     alignment: Alignment.center,
+  //     child: Container(
+  //       width: 10,
+  //       height: 10,
+  //       decoration: BoxDecoration(
+  //         color: color,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _build3DCube(Color color, int index) {
     return AnimatedBuilder(

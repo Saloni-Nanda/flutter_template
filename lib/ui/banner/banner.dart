@@ -84,8 +84,8 @@ class Banner extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2,
             childAspectRatio: 3.2, // Adjusted ratio
             children: [
               _buildBenefitItem(
@@ -121,7 +121,7 @@ class Banner extends StatelessWidget {
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),

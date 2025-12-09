@@ -43,7 +43,7 @@ class SearchedHotelListPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.filter_list, color: Colors.white),
             onPressed: () {
-              // Handle filter action
+              Get.toNamed('/filter');
             },
           ),
         ],
@@ -51,13 +51,13 @@ class SearchedHotelListPage extends StatelessWidget {
       body: Column(
         children: [
           // Search Summary Card
-          SearchSummaryCard(searchData: searchData),
+          SearchSummaryCard(searchData: searchData, showDownArrow: true),
 
           // Hotel List
           Expanded(
             child: HotelList(
               onHotelTap: (hotel) {
-                Get.to(() => HotelDetailPage(hotel: hotel, searchData: searchData!));
+                Get.to(() => HotelDetailPage(hotel: hotel, searchData: searchData));
               },
             ),
           ),

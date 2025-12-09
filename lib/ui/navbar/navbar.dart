@@ -68,7 +68,7 @@ class _NavbarState extends State<Navbar> {
         color: AppColor.secondary, // Secondary background
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha:0.05),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -86,14 +86,14 @@ class _NavbarState extends State<Navbar> {
               gradient: LinearGradient(
                 colors: [
                   AppColor.primary,
-                  AppColor.primary.withOpacity(0.8),
+                  AppColor.primary.withValues(alpha:0.8),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColor.primary.withOpacity(0.3),
+                  color: AppColor.primary.withValues(alpha:0.3),
                   blurRadius: 8,
                   offset: const Offset(0, 3),
                 ),
@@ -114,21 +114,21 @@ class _NavbarState extends State<Navbar> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 Text(
                   'Welcome',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: Colors.white
-                        .withOpacity(0.8), // Lighter text for contrast
+                        .withValues(alpha:0.8), // Lighter text for contrast
                     letterSpacing: 0.5,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   ' ${widget.userName}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: Colors.white, // White text for contrast
@@ -166,7 +166,7 @@ class _NavbarState extends State<Navbar> {
 
   Widget _buildHotelSearchBar() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
       child: GestureDetector(
         onTap: widget.onSearchTap ?? () => Get.toNamed('/search'),
         child: Container(
@@ -175,17 +175,10 @@ class _NavbarState extends State<Navbar> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.3), // Softer border
+              color: Colors.white.withValues(alpha:0.3), // Softer border
               width: 1.5,
             ),
-            boxShadow: [
-              BoxShadow(
-                color:
-                    Colors.black.withOpacity(0.1), // Slightly stronger shadow
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
+            
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -195,10 +188,10 @@ class _NavbarState extends State<Navbar> {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: AppColor.primary.withOpacity(0.1),
+                    color: AppColor.primary.withValues(alpha:0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.search_rounded,
                     color: AppColor.primary,
                     size: 20,
@@ -210,7 +203,7 @@ class _NavbarState extends State<Navbar> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Find Your Perfect Stay',
                         style: TextStyle(
                           fontSize: 14,
@@ -234,7 +227,7 @@ class _NavbarState extends State<Navbar> {
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: AppColor.primary.withOpacity(0.7),
+                  color: AppColor.primary.withValues(alpha:0.7),
                 ),
               ],
             ),
@@ -259,18 +252,11 @@ class _NavbarState extends State<Navbar> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color:
-                Colors.white.withOpacity(0.9), // White with slight transparency
+                Colors.white.withValues(alpha:0.9), // White with slight transparency
             border: Border.all(
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha:0.4),
               width: 1.5,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
           ),
           child: IconButton(
             icon: Icon(
@@ -298,7 +284,7 @@ class _NavbarState extends State<Navbar> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: badgeColor.withOpacity(0.4),
+                    color: badgeColor.withValues(alpha:0.4),
                     blurRadius: 4,
                     spreadRadius: 1,
                   ),
