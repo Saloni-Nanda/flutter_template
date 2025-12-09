@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hotel_paradise/common/theme/theme.dart';
 import 'dart:math' as math;
 import '../../utils/app_routes.dart';
 
@@ -29,7 +30,7 @@ class _SplashPageState extends State<SplashPage>
       4,
       (index) => AnimationController(
         vsync: this,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 10),
       ),
     );
 
@@ -41,7 +42,7 @@ class _SplashPageState extends State<SplashPage>
       });
     }
 
-    Future.delayed(const Duration(seconds: 3), () {
+Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         Get.offNamed(AppRoutes.home);
       }
@@ -61,11 +62,11 @@ class _SplashPageState extends State<SplashPage>
       transform: transform,
       alignment: Alignment.center,
       child: Container(
-        width: 60,
-        height: 60,
+        width: 10,
+        height: 10,
         decoration: BoxDecoration(
-          color: color.withOpacity(opacity),
-          border: Border.all(color: Colors.white.withOpacity(0.4), width: 2),
+          color: color,
+          
         ),
       ),
     );
@@ -90,42 +91,34 @@ class _SplashPageState extends State<SplashPage>
               ..rotateY(angleY),
             alignment: Alignment.center,
             child: SizedBox(
-              width: 60,
-              height: 60,
+              width: 10,
+              height: 10,
               child: Stack(
                 children: [
                   // Front face (Blue-ish tint)
                   Transform(
                     transform: Matrix4.identity()
-                      ..translate(0.0, 0.0, 30.0),
+                      ..translate(0.0, 0.0, 5.0),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
                         color: color,
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
                       ),
                     ),
                   ),
                   // Back face
                   Transform(
                     transform: Matrix4.identity()
-                      ..translate(0.0, 0.0, -30.0)
+                      ..translate(0.0, 0.0, -5.0)
                       ..rotateY(math.pi),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.8),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
+                        color: color,
                       ),
                     ),
                   ),
@@ -133,17 +126,13 @@ class _SplashPageState extends State<SplashPage>
                   Transform(
                     transform: Matrix4.identity()
                       ..rotateY(math.pi / 2)
-                      ..translate(0.0, 0.0, 30.0),
+                      ..translate(0.0, 0.0, 5.0),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.9),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
+                        color: color,
                       ),
                     ),
                   ),
@@ -151,17 +140,13 @@ class _SplashPageState extends State<SplashPage>
                   Transform(
                     transform: Matrix4.identity()
                       ..rotateY(-math.pi / 2)
-                      ..translate(0.0, 0.0, 30.0),
+                      ..translate(0.0, 0.0, 5.0),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.9),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
+                        color: color,
                       ),
                     ),
                   ),
@@ -169,17 +154,13 @@ class _SplashPageState extends State<SplashPage>
                   Transform(
                     transform: Matrix4.identity()
                       ..rotateX(math.pi / 2)
-                      ..translate(0.0, 0.0, 30.0),
+                      ..translate(0.0, 0.0, 5.0),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.95),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
+                        color: color,
                       ),
                     ),
                   ),
@@ -187,17 +168,13 @@ class _SplashPageState extends State<SplashPage>
                   Transform(
                     transform: Matrix4.identity()
                       ..rotateX(-math.pi / 2)
-                      ..translate(0.0, 0.0, 30.0),
+                      ..translate(0.0, 0.0, 5.0),
                     alignment: Alignment.center,
                     child: Container(
-                      width: 60,
-                      height: 60,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.95),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
-                          width: 2,
-                        ),
+                        color: color,
                       ),
                     ),
                   ),
@@ -222,7 +199,7 @@ class _SplashPageState extends State<SplashPage>
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.2),
+                color: Theme.of(context).primaryColor.withValues(alpha:0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -232,20 +209,19 @@ class _SplashPageState extends State<SplashPage>
               ),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               "Hotel Paradise",
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontFamily: 'Playfair Display',
+                color: AppColor.primary,
               ),
             ),
             const SizedBox(height: 48),
             
             // 3D Rotating Cubes
             SizedBox(
-              height: 80,
+              height: 20,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {
