@@ -23,12 +23,20 @@ class _BookingState extends State<Booking> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MyBookingsPage(),
-      bottomNavigationBar: BottomNavbar(
-        currentIndex: _currentIndex,
-        onTap: _onNavTap,
-        items: navItems,
+    return WillPopScope(
+      onWillPop: () async {
+        // Navigate back to home instead of closing app
+        setState(() => _currentIndex = 0);
+        Get.toNamed(navItems[0].route);
+        return false; // Prevent default back behavior
+      },
+      child: Scaffold(
+        body: MyBookingsPage(),
+        bottomNavigationBar: BottomNavbar(
+          currentIndex: _currentIndex,
+          onTap: _onNavTap,
+          items: navItems,
+        ),
       ),
     );
   }

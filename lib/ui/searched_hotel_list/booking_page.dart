@@ -354,16 +354,16 @@ class _BookingPageState extends State<BookingPage> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Booking Confirmed!'),
+        title: const Text('Booking Confirmed!', style: TextStyle(color: AppColor.primary),),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hotel: ${widget.hotel.name}'),
-            Text('Room: ${widget.room.name}'),
-            Text('Total: \$${total.toStringAsFixed(0)}'),
+            Text('Hotel: ${widget.hotel.name}', style: TextStyle(color: AppColor.primary),),
+            Text('Room: ${widget.room.name}', style: TextStyle(color: AppColor.primary),),
+            Text('Total: \$${total.toStringAsFixed(0)}', style: TextStyle(color: AppColor.primary),),
             const SizedBox(height: 16),
-            const Text('A confirmation email has been sent to your email address.'),
+            const Text('A confirmation email has been sent to your email address.', style: TextStyle(color: AppColor.primary),),
           ],
         ),
         actions: [
@@ -372,7 +372,7 @@ class _BookingPageState extends State<BookingPage> {
               Navigator.of(context).pop(); // Close dialog
               Get.offAllNamed('/home'); // Go to home or wherever
             },
-            child: const Text('OK'),
+            child: const Text('OK', style: TextStyle(color: AppColor.primary),),
           ),
         ],
       ),

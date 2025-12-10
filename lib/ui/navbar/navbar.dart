@@ -26,7 +26,7 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140, // Total height: 100 + 40 (search bar height approx)
+      height: 160, // Total height: 100 + 40 (search bar height approx)
       child: Stack(
         children: [
           // Main navbar container
@@ -170,7 +170,7 @@ class _NavbarState extends State<Navbar> {
       child: GestureDetector(
         onTap: widget.onSearchTap ?? () => Get.toNamed('/search'),
         child: Container(
-          height: 56,
+          height: 64,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
